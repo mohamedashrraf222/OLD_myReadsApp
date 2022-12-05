@@ -64,7 +64,7 @@ function App() {
 
       console.log(updateTheData);
       console.log(prev);
-      return prev
+      return updateTheData
     });
   }
 
