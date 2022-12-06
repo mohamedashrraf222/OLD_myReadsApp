@@ -18,8 +18,7 @@ import AllBoks from "./assets/AllBooks";
 //
 // importin our API
 import * as BooksAPI from "./assets/BooksAPI";
-import SearchBooks from "./components/searchBooks";
-import SearchBox from "./components/searchBox";
+import SearchPage from "./components/searchPage";
 
 // ---------------------------- //
 
@@ -52,31 +51,8 @@ function App() {
     BooksAPI.getAll().then((res) => setApiBooks(res));
     console.log(`useEffect happend`);
   }, []);
-  
-  // for searchBox
-  // this function is to filter the books shown on the searchPage with search value
-  function filterBooks(search) {
-    // search is the value of ipute in the box
-    console.log(search);
-    // this is the new version working function with bug in search
-    let updatedData = apiBooks.filter((book) => {
-      return book.title.toLowerCase().includes(search.toLowerCase());
-    });
-    setShownBooks((prev)=>{
-      return prev = updatedData
-    })
-    console.log(updatedData);
-    // this is old broken function
-    // setApiBooks((prev) => {
-    // let updateTheData = prev.filter((book) => {
-    //   book.title.toLowerCase().includes(search.toLowerCase());
-    // });
-    //   console.log(updateTheData);
-    //   console.log(prev);
-    //   return prev;
-    // });
 
-  }
+  
 
   // for mainPage && searchPage
   // this function is passed to the search page to add the data of book with books on main page
@@ -85,43 +61,6 @@ function App() {
       return [...prev, bookData];
     });
   }
-
-  // for searchPage
-  // this state is for the books which are shown on the search page
-  const [shownBooks, setShownBooks] = React.useState([]);
-
-  //
-  // this fuction is to set the shown books in the search page
-
-  // putting jsx of the search page in a componetn
-  let SearchPage = () => {
-    return (
-      <div>
-        <div className="search-books">
-          <div className="search-books-bar">
-            <Link className="close-search" to="/">
-              Close
-            </Link>
-            <div className="search-books-input-wrapper">
-              {/* here I am passing setApiBooks function to the search box component */}
-              <SearchBox setApiBooks={setApiBooks} filterBooks={filterBooks} />
-            </div>
-          </div>
-          <div className="search-books-results">
-            <ol className="books-grid">
-              {
-                <SearchBooks
-                  apiBooks={shownBooks}
-                  setApiBooks={setShownBooks}
-                  addDataToMainPage={addDataToMainPage}
-                />
-              }
-            </ol>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   //
   // putting the main page in a component
@@ -134,9 +73,21 @@ function App() {
         <div className="list-books-content">
           <div>
             {/* giving every component the function and the data needed */}
-            <MainShelf allBooks={allBooks} changeShelf={findBook} shelfName="currentlyReading"/>
-            <MainShelf allBooks={allBooks} changeShelf={findBook} shelfName="wantToRead"/>
-            <MainShelf allBooks={allBooks} changeShelf={findBook} shelfName="read"/>
+            <MainShelf
+              allBooks={allBooks}
+              changeShelf={findBook}
+              shelfName="currentlyReading"
+            />
+            <MainShelf
+              allBooks={allBooks}
+              changeShelf={findBook}
+              shelfName="wantToRead"
+            />
+            <MainShelf
+              allBooks={allBooks}
+              changeShelf={findBook}
+              shelfName="read"
+            />
           </div>
         </div>
         <div className="open-search">
@@ -152,7 +103,16 @@ function App() {
     <div className="app">
       <Routes>
         <Route exact path="/" element={<Mainpage />} />
-        <Route path="search" element={<SearchPage />} />
+        <Route
+          path="search"
+          element={
+            <SearchPage
+              addDataToMainPage={addDataToMainPage}
+              setApiBooks={setApiBooks}
+              apiBooks={apiBooks}
+            />
+          }
+        />
       </Routes>
     </div>
   );

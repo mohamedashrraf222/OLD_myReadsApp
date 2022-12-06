@@ -1,8 +1,8 @@
 import React from "react";
 
 export default function SearchBooks({
-  apiBooks,
-  setApiBooks,
+  shownBooks,
+  setShownBooks,
   addDataToMainPage,
 }) {
   //
@@ -10,7 +10,7 @@ export default function SearchBooks({
   function handleDataChange(index, shelf) {
     //
     // at the first I am removing the book from the search page because it's supposed to be in our main page
-    setApiBooks((prev) => {
+    setShownBooks((prev) => {
       prev.splice(index, 1);
       // console.log(prev);
       return prev;
@@ -20,7 +20,7 @@ export default function SearchBooks({
     // this function is used to add the book to the data on the main page
 
     function processData() {
-      let bookWillSent = apiBooks[index];
+      let bookWillSent = shownBooks[index];
       bookWillSent.shelf = shelf;
       addDataToMainPage(bookWillSent);
       console.log(bookWillSent);
@@ -31,13 +31,13 @@ export default function SearchBooks({
   //
   // this function is to find the book index which is clicked in the search page
   function findBookInAPI(name, shelf) {
-    for (let i = 0; i < apiBooks.length; i++) {
-      apiBooks[i].title === name ? handleDataChange(i, shelf) : false;
+    for (let i = 0; i < shownBooks.length; i++) {
+      shownBooks[i].title === name ? handleDataChange(i, shelf) : false;
     }
   }
 
   function SearchBooks() {
-    return apiBooks.map((book) => {
+    return shownBooks.map((book) => {
       return (
         <li key={book.title}>
           <div className="book">
@@ -75,9 +75,9 @@ export default function SearchBooks({
     });
   }
 
-  function Alert(params) {
+  function Alert() {
     return <div>please refresh the page</div>;
   }
 
-  return Array.isArray(apiBooks) ? <SearchBooks /> : <Alert />;
+  return Array.isArray(shownBooks) ? <SearchBooks /> : <Alert />;
 }
