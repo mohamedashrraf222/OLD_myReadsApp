@@ -68,7 +68,18 @@ function App() {
     });
   }
 
-  //
+  // 
+  // this function is passed to the search page to add the data of book with books on main page
+  function addDataToMainPage(bookData) {
+    setAllBooks((prev)=>{
+      return [
+        ...prev,
+        bookData
+      ]
+    })
+  }
+
+  // 
   // putting jsx of the search page in a componetn
   let SearchPage = () => {
     return (
@@ -85,7 +96,7 @@ function App() {
           </div>
           <div className="search-books-results">
             <ol className="books-grid"> 
-              {<SearchBooks apiBooks={apiBooks} setApiBooks={setApiBooks}/>}
+              {<SearchBooks apiBooks={apiBooks} setApiBooks={setApiBooks} addDataToMainPage={addDataToMainPage}/>}
             </ol>
           </div>
         </div>

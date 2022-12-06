@@ -1,6 +1,10 @@
 import React from "react";
 
-export default function SearchBooks({ apiBooks, setApiBooks }) {
+export default function SearchBooks({
+  apiBooks,
+  setApiBooks,
+  addDataToMainPage,
+}) {
   //
   // this function is used to add the selected book to our data in the main page with its shelf
   function handleDataChange(index, shelf) {
@@ -14,13 +18,20 @@ export default function SearchBooks({ apiBooks, setApiBooks }) {
 
     //
     // this function is used to add the book to the data on the main page
+    function processData() {
+      let bookWillSent = apiBooks[index];
+      bookWillSent.shelf = shelf;
+      addDataToMainPage(bookWillSent);
+      console.log(bookWillSent);
+    }
+    processData();
   }
 
-  // 
+  //
   // this function is to find the book index which is clicked in the search page
   function findBookInAPI(name, shelf) {
     for (let i = 0; i < apiBooks.length; i++) {
-      apiBooks[i].title === name ? handleDataChange(i) : false;
+      apiBooks[i].title === name ? handleDataChange(i, shelf) : false;
     }
   }
 
@@ -44,7 +55,7 @@ export default function SearchBooks({ apiBooks, setApiBooks }) {
                   onChange={(e) => {
                     findBookInAPI(book.title, e.target.value);
                   }}
-                  defaultValue={book.shelf}
+                  defaultValue="none"
                 >
                   <option value="none" disabled>
                     Move to...
