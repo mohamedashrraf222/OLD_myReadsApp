@@ -1,13 +1,13 @@
 import React from "react";
 
-export default function currentlyReading({ allBooks, changeShelf }) {
+export default function MainShelf({ allBooks, changeShelf , shelfName }) {
 
   // I am making the books are shown dynamically according to their data with map method
 
   let Books = allBooks.map((book) => {
     return (
       // at the first I check if the book is on this shelf or not and then return a div contain the book if it's
-      book.shelf === "currentlyReading" && (
+      book.shelf === `${shelfName}` && (
         // each element in the book div take its structure from book data
         <li key={book.title}>
           <div className="book">
