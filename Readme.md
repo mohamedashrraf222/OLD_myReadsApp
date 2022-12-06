@@ -4,4 +4,3 @@
 - npm install
 - npm run dev
 
-## there is a bug in the search bar that when you type something it don't work
